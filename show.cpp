@@ -1,4 +1,4 @@
-
+/*ViTe-å¿—å°Šå¨å°‘*/
 
 #include <stdio.h>
 #include <string.h>
@@ -9,100 +9,100 @@
 #include <easyx.h>
 
 
-/* ´ËÁ½ĞĞÊÇÕ¹Ê¾ÆÁµÄ¿í¸ß£¬¸ù¾İµçÄÔÆÁÄ»¿ÉÎ¢µ÷ */ 
+/* æ­¤ä¸¤è¡Œæ˜¯å±•ç¤ºå±çš„å®½é«˜ï¼Œæ ¹æ®ç”µè„‘å±å¹•å¯å¾®è°ƒ */ 
 #define WIDTH 100
-#define HEIGHT 28//HEIGHTĞë´óÓÚµÈÓÚ28 
+#define HEIGHT 28//HEIGHTé¡»å¤§äºç­‰äº28 
 /******************************************/ 
-void create_list(char [][WIDTH] );//´´½¨Ò»¸ö¸ß20£¬¿í100µÄÊı×é 
-void print_list(const char [][WIDTH] );//´òÓ¡³öÊı×é 
-void gotoxy(int,int);//ÒÆ¶¯¹â±ê 
-void print_helix(char [][WIDTH]);//ÂİĞı¾ØÕó
+void create_list(char [][WIDTH] );//åˆ›å»ºä¸€ä¸ªé«˜20ï¼Œå®½100çš„æ•°ç»„ 
+void print_list(const char [][WIDTH] );//æ‰“å°å‡ºæ•°ç»„ 
+void gotoxy(int,int);//ç§»åŠ¨å…‰æ ‡ 
+void print_helix(char [][WIDTH]);//èºæ—‹çŸ©é˜µ
 int assertnum(char [][WIDTH],int,int); 
-void HideCursor();//Òş²Ø¹â±ê 
+void HideCursor();//éšè—å…‰æ ‡ 
 void color(const unsigned short color1);
-void print_heart1(char [][WIDTH],int );//ÁùÁ¬ĞÄ
-void print_heart2(char [][WIDTH],int ); //ĞÄĞÄÏàÓ¡
+void print_heart1(char [][WIDTH],int );//å…­è¿å¿ƒ
+void print_heart2(char [][WIDTH],int ); //å¿ƒå¿ƒç›¸å°
 
-int print_heart3(int*,int ,int);//Ìø¶¯µÄĞÄ 
+int print_heart3(int*,int ,int);//è·³åŠ¨çš„å¿ƒ 
 float f(float x, float y, float z);
 float h(float x, float z);
 
-void roll_screen(char [][5],int,int);//´òÓ¡×Ö£¨ÏŞ³¤99£©£¬Ä¬ÈÏÆÁÄ»ÖĞ¼ä¾ÓÖĞ¶ÔÆë 
+void roll_screen(char [][5],int,int);//æ‰“å°å­—ï¼ˆé™é•¿99ï¼‰ï¼Œé»˜è®¤å±å¹•ä¸­é—´å±…ä¸­å¯¹é½ 
 
-void clean_screen(char list[][WIDTH]){//ÇåÆÁ×¨ÓÃº¯Êı 
+void clean_screen(char list[][WIDTH]){//æ¸…å±ä¸“ç”¨å‡½æ•° 
 	create_list(list);
     gotoxy(0,0);
   	print_list(list);
   	gotoxy(0,0);
 }
-/*ÕâÊÇ´ó°®ĞÄµ×ÏÂµÄÎÄ×Ö*/ 
+/*è¿™æ˜¯å¤§çˆ±å¿ƒåº•ä¸‹çš„æ–‡å­—*/ 
 void sentance() {
-    char title[] ="============ 2020 11 18 ============";          //ÊäÈë±êÌâ
-    char word[] = "         ĞÄ¶¼ÌÍ³öÀ´¸øÄã¿´ÁË";          //ÊäÈëÏëËµµÄÎÄ×Ö
-    /*×¢Òâµ÷Õû¸ñÊ½*/
+    char title[] ="============ 2020 11 18 ============";          //è¾“å…¥æ ‡é¢˜
+    char word[] = "         å¿ƒéƒ½æå‡ºæ¥ç»™ä½ çœ‹äº†";          //è¾“å…¥æƒ³è¯´çš„æ–‡å­—
+    /*æ³¨æ„è°ƒæ•´æ ¼å¼*/
 	printf("\n\t      ");                                    
     printf("%s",title);
     printf("\n\t      ");
     printf("%s", word);
 }
-/**************MAIN·½·¨**********************************/ 
+/**************MAINæ–¹æ³•**********************************/ 
 int main(){
-	/*³õÊ¼»¯ÄÚÈİºöÊÓ*/ 
+	/*åˆå§‹åŒ–å†…å®¹å¿½è§†*/ 
 	int heart_count=1;
     char list[HEIGHT][WIDTH];
     create_list(list);
     setbkcolor(WHITE);
     /*******************/ 
     
-    /*ÑÕÉ«¶ÔÓ¦Öµ£º
-¡¡¡¡0=ºÚÉ«                8=»ÒÉ«¡¡¡¡
-  ¡¡ 1=À¶É«                9=µ­À¶É«                ¡¡¡¡                        
-¡¡¡¡2=ÂÌÉ«                10=µ­ÂÌÉ«               ¡¡¡¡
-¡¡¡¡3=ºşÀ¶É«          11=µ­Ç³ÂÌÉ«        ¡¡
-¡¡¡¡4=ºìÉ«                12=µ­ºìÉ«        ¡¡¡¡
-¡¡¡¡5=×ÏÉ«                13=µ­×ÏÉ«                ¡¡¡¡
-¡¡¡¡6=»ÆÉ«                14=µ­»ÆÉ«               ¡¡¡¡
-¡¡¡¡7=°×É«                15=ÁÁ°×É«        
-¡¡¡¡
+    /*é¢œè‰²å¯¹åº”å€¼ï¼š
+ã€€ã€€0=é»‘è‰²                8=ç°è‰²ã€€ã€€
+  ã€€ 1=è“è‰²                9=æ·¡è“è‰²                ã€€ã€€                        
+ã€€ã€€2=ç»¿è‰²                10=æ·¡ç»¿è‰²               ã€€ã€€
+ã€€ã€€3=æ¹–è“è‰²          11=æ·¡æµ…ç»¿è‰²        ã€€
+ã€€ã€€4=çº¢è‰²                12=æ·¡çº¢è‰²        ã€€ã€€
+ã€€ã€€5=ç´«è‰²                13=æ·¡ç´«è‰²                ã€€ã€€
+ã€€ã€€6=é»„è‰²                14=æ·¡é»„è‰²               ã€€ã€€
+ã€€ã€€7=ç™½è‰²                15=äº®ç™½è‰²        
+ã€€ã€€
 */
-   /*ÓÃË«ÒıºÅÀ©ÆğÒª´òÓ¡µÄ×Ö*/ 
-    char word1[21][5]={"ËÍ","¸ø","Àî","x","x","Í¬","Ñ§"}; //¸ñÊ½Èç´Ë×ÔĞĞ¸ü¸Ä 
-    int len1=7;//ÉÏÃæÓĞ¶àÉÙ×Ö¾ÍÉèÖÃ¶àÉÙ ×î¸ß²»³¬¹ıWIDTHÖµ 
-    int color_num=3;//¿´ÉÏÃæµÄÑÕÉ«¶ÔÓ¦Öµ 
+   /*ç”¨åŒå¼•å·æ‰©èµ·è¦æ‰“å°çš„å­—*/ 
+    char word1[21][5]={"é€","ç»™","æ","x","x","åŒ","å­¦"}; //æ ¼å¼å¦‚æ­¤è‡ªè¡Œæ›´æ”¹ 
+    int len1=7;//ä¸Šé¢æœ‰å¤šå°‘å­—å°±è®¾ç½®å¤šå°‘ æœ€é«˜ä¸è¶…è¿‡WIDTHå€¼ 
+    int color_num=3;//çœ‹ä¸Šé¢çš„é¢œè‰²å¯¹åº”å€¼ 
     roll_screen(word1,len1,color_num);
   	clean_screen(list);
   	
-    /*ÂİĞıÅÜÂíµÆ*/ 
+    /*èºæ—‹è·‘é©¬ç¯*/ 
     print_helix(list);
     clean_screen(list);
     
-    /*ĞÄĞÄÏàÓ¡ÌØĞ§*/ 
-    color_num=4;//ÉèÖÃÑÕÉ« 
+    /*å¿ƒå¿ƒç›¸å°ç‰¹æ•ˆ*/ 
+    color_num=4;//è®¾ç½®é¢œè‰² 
     print_heart2(list,color_num);
     clean_screen(list);
     
-    /*ÁùÁ¬ĞÄÌØĞ§*/ 
-    color_num=4;//ÉèÖÃÑÕÉ« 
+    /*å…­è¿å¿ƒç‰¹æ•ˆ*/ 
+    color_num=4;//è®¾ç½®é¢œè‰² 
     print_heart1(list,color_num);
     clean_screen(list);
     
-    /*Ìø¶¯µÄĞÄ*/ 
-    color_num=4;//ÉèÖÃÑÕÉ« 
-    int speed=1;//ÉèÖÃĞÄÌø¶¯µÄËÙ¶È £¬ÊıÖµÔ½Ğ¡Ô½¿ì£¬ÇÒĞë´óÓÚÁã 
+    /*è·³åŠ¨çš„å¿ƒ*/ 
+    color_num=4;//è®¾ç½®é¢œè‰² 
+    int speed=1;//è®¾ç½®å¿ƒè·³åŠ¨çš„é€Ÿåº¦ ï¼Œæ•°å€¼è¶Šå°è¶Šå¿«ï¼Œä¸”é¡»å¤§äºé›¶ 
   	int a=print_heart3(&heart_count,color_num,speed);
   	clean_screen(list);
   	
   	
-  	char word2[21][5]={"Âä","Ä»"};
-	int len2=2;//ÉÏÃæÄÚÈİµÄ×ÖÊı 
-	color_num=10;//ÉèÖÃÑÕÉ« 
+  	char word2[21][5]={"è½","å¹•"};
+	int len2=2;//ä¸Šé¢å†…å®¹çš„å­—æ•° 
+	color_num=10;//è®¾ç½®é¢œè‰² 
   	roll_screen(word2,len2,color_num);
   	clean_screen(list); 
  
- 	/*²»¶ÏµÄ¸ü¸Äµ÷ÊÔ£¬»áµÃµ½ÄãÏëÒªµÄ½á¹ûµÄ*/   
+ 	/*ä¸æ–­çš„æ›´æ”¹è°ƒè¯•ï¼Œä¼šå¾—åˆ°ä½ æƒ³è¦çš„ç»“æœçš„*/   
 }
-/****************ÒÔÏÂÄÚÈİ¿ÉÒÔ²»¿´****************/ 
-/*²»¹ı×¢ÊÍÒ²Ğ´µÄ±È½ÏÏêÏ¸*/ 
+/****************ä»¥ä¸‹å†…å®¹å¯ä»¥ä¸çœ‹****************/ 
+/*ä¸è¿‡æ³¨é‡Šä¹Ÿå†™çš„æ¯”è¾ƒè¯¦ç»†*/ 
 void roll_screen(char word[][5],int len,int color_num){
 	int x=50;
 	int count=0;
@@ -332,29 +332,29 @@ void print_list(const char list[][WIDTH]){
 
     }
 }
-void gotoxy(int x,int y)//¹â±ê¶¨Î»º¯Êı
+void gotoxy(int x,int y)//å…‰æ ‡å®šä½å‡½æ•°
 {
-    COORD p;//¶¨Òå½á¹¹Ìå±äÁ¿p
-    HANDLE handle=GetStdHandle(STD_OUTPUT_HANDLE);//»ñÈ¡µ±Ç°º¯Êı¾ä±ú
-    p.X=x;p.Y=y;//½«¹â±êµÄÄ¿±êÒÆ¶¯Î»ÖÃ´«µİ¸ø½á¹¹Ìå
-    SetConsoleCursorPosition(handle,p);//ÒÆ¶¯¹â±ê
+    COORD p;//å®šä¹‰ç»“æ„ä½“å˜é‡p
+    HANDLE handle=GetStdHandle(STD_OUTPUT_HANDLE);//è·å–å½“å‰å‡½æ•°å¥æŸ„
+    p.X=x;p.Y=y;//å°†å…‰æ ‡çš„ç›®æ ‡ç§»åŠ¨ä½ç½®ä¼ é€’ç»™ç»“æ„ä½“
+    SetConsoleCursorPosition(handle,p);//ç§»åŠ¨å…‰æ ‡
 }
 int assertnum(char list[][WIDTH],int width,int height){
     if(list[height][width]!='0')return 0;
     return 1;
 }
 void print_helix(char list[][WIDTH]){
-    int width=0;//×ø±ê¿í
-    int height=0;//×ø±ê¸ß
-    int first=0;//ÅĞ¶ÏÊÇ·ñµÚÒ»´Î×ªÏò
-    int first_1=1;//ÅĞ¶ÏÊÇ·ñÔÚÈÆµÚÒ»È¦
-    int right=1;//ÓÒ×ª±êÊ¶
-    int down=0;//ÏÂĞĞ±êÊ¶
-    int left=0;//×ó×ª±êÊ¶
-    int up=0;//ÉÏĞĞ±êÊ¶
-    char si='*';//¿ØÖÆÊä³öµÄ·ûºÏºÅ 
+    int width=0;//åæ ‡å®½
+    int height=0;//åæ ‡é«˜
+    int first=0;//åˆ¤æ–­æ˜¯å¦ç¬¬ä¸€æ¬¡è½¬å‘
+    int first_1=1;//åˆ¤æ–­æ˜¯å¦åœ¨ç»•ç¬¬ä¸€åœˆ
+    int right=1;//å³è½¬æ ‡è¯†
+    int down=0;//ä¸‹è¡Œæ ‡è¯†
+    int left=0;//å·¦è½¬æ ‡è¯†
+    int up=0;//ä¸Šè¡Œæ ‡è¯†
+    char si='*';//æ§åˆ¶è¾“å‡ºçš„ç¬¦åˆå· 
     int count=0;
-    int speed=120;//¿ØÖÆĞı×ªËÙ¶È 
+    int speed=120;//æ§åˆ¶æ—‹è½¬é€Ÿåº¦ 
     int color_num=1;
     for(int i=0;i<WIDTH*HEIGHT;i++){
         if(right){
@@ -468,16 +468,16 @@ void print_helix(char list[][WIDTH]){
 		} 
     }
 }
-void HideCursor() // ÓÃÓÚÒş²Ø¹â±ê
+void HideCursor() // ç”¨äºéšè—å…‰æ ‡
 {
-	CONSOLE_CURSOR_INFO cursor_info = {1, 0};  // µÚ¶ş¸öÖµÎª0±íÊ¾Òş²Ø¹â±ê
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);//º¯ÊıºÍ½á¹¹Ìå¶¼ÔÚwindows.hÖĞ¶¨Òå¡£
+	CONSOLE_CURSOR_INFO cursor_info = {1, 0};  // ç¬¬äºŒä¸ªå€¼ä¸º0è¡¨ç¤ºéšè—å…‰æ ‡
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);//å‡½æ•°å’Œç»“æ„ä½“éƒ½åœ¨windows.hä¸­å®šä¹‰ã€‚
 }
 void color(const unsigned short color1)
 {        
         if(color1>=0&&color1<=15)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color1);
-        /*Èç¹û²»ÔÚ0-15µÄ·¶Î§ÑÕÉ«£¬ÄÇÃ´¸ÄÎªÄ¬ÈÏµÄÑÕÉ«°×É«£»*/
+        /*å¦‚æœä¸åœ¨0-15çš„èŒƒå›´é¢œè‰²ï¼Œé‚£ä¹ˆæ”¹ä¸ºé»˜è®¤çš„é¢œè‰²ç™½è‰²ï¼›*/
     else
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
