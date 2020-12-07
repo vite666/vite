@@ -67,7 +67,7 @@ int main(){
 */
    /*用双引号扩起要打印的字*/ 
     char word1[21][5]={"送","给","李","x","x","同","学"}; //格式如此自行更改 
-    int len1=7;//上面有多少字就设置多少 最高不超过WIDTH值 
+    int len1=7;//上面有多少字数值就为多少 最高不超过WIDTH值 
     int color_num=3;//看上面的颜色对应值 
     roll_screen(word1,len1,color_num);
   	clean_screen(list);
