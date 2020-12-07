@@ -6,7 +6,7 @@
 #include <math.h>
 #include <tchar.h>
 #include <stdlib.h>
-#include <easyx.h>
+
 
 
 /* 此两行是展示屏的宽高，根据电脑屏幕可微调 */ 
@@ -51,7 +51,7 @@ int main(){
 	int heart_count=1;
     char list[HEIGHT][WIDTH];
     create_list(list);
-    setbkcolor(WHITE);
+    
     /*******************/ 
     
     /*颜色对应值：
