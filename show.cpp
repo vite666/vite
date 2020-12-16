@@ -1,4 +1,4 @@
-/*ViTe-志尊威少*/
+/*志尊威少*/ 
 
 #include <stdio.h>
 #include <string.h>
@@ -6,8 +6,6 @@
 #include <math.h>
 #include <tchar.h>
 #include <stdlib.h>
-
-
 
 /* 此两行是展示屏的宽高，根据电脑屏幕可微调 */ 
 #define WIDTH 100
@@ -17,7 +15,7 @@ void create_list(char [][WIDTH] );//创建一个高20，宽100的数组
 void print_list(const char [][WIDTH] );//打印出数组 
 void gotoxy(int,int);//移动光标 
 void print_helix(char [][WIDTH]);//螺旋矩阵
-int assertnum(char [][WIDTH],int,int); 
+void print_helix2(char [][WIDTH],int *color_num,int speed,int*count); 
 void HideCursor();//隐藏光标 
 void color(const unsigned short color1);
 void print_heart1(char [][WIDTH],int );//六连心
@@ -66,27 +64,28 @@ int main(){
 　　
 */
    /*用双引号扩起要打印的字*/ 
-    char word1[21][5]={"送","给","李","x","x","同","学"}; //格式如此自行更改 
-    int len1=7;//上面有多少字数值就为多少 最高不超过WIDTH值 
-    int color_num=3;//看上面的颜色对应值 
+    char word1[21][5]={"送","给","李","x","x","同","学"}; //一个字一个双引号 
+    int len1=7;//此为字数值，最高不超过WIDTH值 
+    int color_num=3;//相应颜色对应值 
     roll_screen(word1,len1,color_num);
   	clean_screen(list);
   	
     /*螺旋跑马灯*/ 
     print_helix(list);
+    
     clean_screen(list);
     
-    /*心心相印特效*/ 
+    /*心心相印特效*/
     color_num=4;//设置颜色 
     print_heart2(list,color_num);
     clean_screen(list);
     
-    /*六连心特效*/ 
+    /*六连心特效*/
     color_num=4;//设置颜色 
     print_heart1(list,color_num);
     clean_screen(list);
     
-    /*跳动的心*/ 
+    /*跳动的心*/
     color_num=4;//设置颜色 
     int speed=1;//设置心跳动的速度 ，数值越小越快，且须大于零 
   	int a=print_heart3(&heart_count,color_num,speed);
@@ -94,10 +93,10 @@ int main(){
   	
   	
   	char word2[21][5]={"落","幕"};
-	int len2=2;//上面内容的字数 
+	int len2=2;//内容字数 
 	color_num=10;//设置颜色 
   	roll_screen(word2,len2,color_num);
-  	clean_screen(list); 
+  	clean_screen(list);
  
  	/*不断的更改调试，会得到你想要的结果的*/   
 }
@@ -339,134 +338,57 @@ void gotoxy(int x,int y)//光标定位函数
     p.X=x;p.Y=y;//将光标的目标移动位置传递给结构体
     SetConsoleCursorPosition(handle,p);//移动光标
 }
-int assertnum(char list[][WIDTH],int width,int height){
-    if(list[height][width]!='0')return 0;
-    return 1;
-}
-void print_helix(char list[][WIDTH]){
-    int width=0;//坐标宽
-    int height=0;//坐标高
-    int first=0;//判断是否第一次转向
-    int first_1=1;//判断是否在绕第一圈
-    int right=1;//右转标识
-    int down=0;//下行标识
-    int left=0;//左转标识
-    int up=0;//上行标识
-    char si='*';//控制输出的符合号 
-    int count=0;
-    int speed=120;//控制旋转速度 
-    int color_num=1;
-    for(int i=0;i<WIDTH*HEIGHT;i++){
-        if(right){
-            if(first){
-                width+=1;
-            }
-            list[height][width]=si;
-            if (width<WIDTH-1){
-                width+=1;
-            }
-            right=assertnum(list,width,height);
-            first=0;
-            if(right){
-                down=0;
-            }
-            else{
-                if(first_1){
-                    down=1;
-                    first=1;
-                }else{
-                    down=1;
-                    first=1;
-                    width-=1;
-                }
-            }
-        }
-        else if(down){
-            if(first){
-                height+=1;
-            }
-            list[height][width]=si;
-            if(height<HEIGHT-1){
-                height+=1;
-            }
-            down=assertnum(list,width,height);
-            first=0;
-            if(down){
-                left=0;
-            }
-            else{
-                if(first_1){
-                    left=1;
-                    first=1;
-
-                }
-                else{
-                    left=1;
-                    first=1;
-                    height-=1;
-                }
-            }
-        }
-        else if(left){
-            if(first){
-                width-=1;
-            }
-            list[height][width]=si;
-            if(width>0){
-                width-=1;
-            }
-            left=assertnum(list,width,height);
-            first=0;
-            if(left){
-                up=0;
-            }
-            else{
-                if(first_1){
-                    up=1;
-                    first=1;
-                    first_1=0;
-                }else{
-                    up=1;
-                    first=1;
-                    width+=1;
-                }
-            }
-        }
-        else if(up){
-            if(first){
-                height-=1;
-            }
-            list[height][width]=si;
-            if(height>0){
-                height-=1;
-            }
-            up=assertnum(list,width,height);
-            first=0;
-            if(up){
-                right=0;
-            }else{
-                if(first_1){
-                    right=1;
-                    first=1;
-                }else{
-                    right=1;
-                    first=1;
-                    height+=1;
-                }
-            }
-        }
+void print_helix2(char list[][WIDTH],int *color_num,int speed,int *count){
 	gotoxy(0,0);
 	HideCursor();
-	count+=1;
-	
-	if(count==speed){
-		color(color_num);
-		print_list(list);
-		count%=speed;
-		color_num+=1;
-		color(16);
-		} 
-    }
+	color(*color_num);
+	print_list(list);
+	(*count)%=speed;
+	(*color_num)+=1;
+	color(16);
+}
+void print_helix(char list[][WIDTH]){
+	int x=0,y=0,tot=1,count=0,speed=130,color_num=1;
+	list[0][0]='*';
+    while(tot<WIDTH*HEIGHT){
+    	while(x+1<WIDTH&&list[y][x+1]=='0'){
+    		list[y][++x]='*';
+    		++tot;
+			count+=1;	
+		if(count==speed){
+			print_helix2(list,&color_num,speed,&count);
+			}	
+		}
+		while(y+1<HEIGHT&&list[y+1][x]=='0'){
+			list[++y][x]='*';
+			++tot;
+			count+=1;	
+		if(count==speed){
+			print_helix2(list,&color_num,speed,&count);
+			}
+			
+		}
+		while(x-1>=0&&list[y][x-1]=='0'){
+			list[y][--x]='*';
+			++tot;
+			count+=1;	
+		if(count==speed){
+			print_helix2(list,&color_num,speed,&count);
+			}
+			
+		}
+		while(y-1>=0&&list[y-1][x]=='0'){
+			list[--y][x]='*';
+			++tot;
+			count+=1;	
+		if(count==speed){
+			print_helix2(list,&color_num,speed,&count);
+			}
+		}	
+		
+	}
+	 
+    
 }
 void HideCursor() // 用于隐藏光标
 {
@@ -481,7 +403,6 @@ void color(const unsigned short color1)
     else
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
-
 
 
 
