@@ -64,7 +64,7 @@ int main(){
 　　
 */
    /*用双引号扩起要打印的字*/ 
-    char word1[21][5]={"送","给","李","x","x","同","学"}; //一个字一个双引号 
+    char word1[21][5]={"送","给","x","x","x","同","学"}; //一个字一个双引号 
     int len1=7;//此为字数值，最高不超过WIDTH值 
     int color_num=3;//相应颜色对应值 
     roll_screen(word1,len1,color_num);
